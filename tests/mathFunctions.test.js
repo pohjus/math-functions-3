@@ -1,5 +1,5 @@
 // Import the function to be tested
-const { add } = require("../src/mathFunctions"); // Adjust the path as needed
+const { add, subtract, multiply, divide } = require("../src/mathFunctions"); // Adjust the path as needed
 
 // Describe the test suite (a group of related tests)
 describe("Math Functions", () => {
@@ -8,5 +8,18 @@ describe("Math Functions", () => {
     expect(result).toBe(8);
   });
 
-  // You can add more test cases here to cover different scenarios
+  test("Subtract", () => {
+    const result = subtract(5, 2);
+    expect(result).toBe(3);
+  });
+
+  test("Multiply", () => {
+    const result = multiply(2, 5);
+    expect(result).toBe(10);
+  });
+
+  test("Divide", () => {
+    const result = divide(10, 2);
+    expect(result).toBe(5);
+  });
 });
