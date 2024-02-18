@@ -21,5 +21,6 @@ describe("Math Functions", () => {
   test("Divide", () => {
     const result = divide(10, 2);
     expect(result).toBe(5);
+    expect(2).toBe(divide(4, 2));
   });
 });
