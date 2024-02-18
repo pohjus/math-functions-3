@@ -1,0 +1,36 @@
+
+name: Node.js CI and Auto Merge
+permissions:
+  contents: write
+on:
+  push:
+    branches:
+      - feature/*
+jobs:
+  test-and-merge:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+      - name: Checkout main branch
+        run: git checkout main
+      - name: Merge feature branch into main
+        run: git merge --no-ff ${{ github.ref }}
+      - name: Push changes
+        run: git push origin main
